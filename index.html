@@ -26,15 +26,48 @@ button:hover{transform:translateY(-1px);border-color:var(--blue);background:#284
 .feedback{padding:15px;border-radius:13px;margin-top:16px;border:1px solid var(--line);background:#0d1929}.feedback.good{border-color:#237c59}.feedback.bad{border-color:#8b3d4c}.feedback h3{margin:0 0 5px}.feedback p{margin:5px 0;color:#c5d3e5}
 .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}.muted{color:var(--muted);font-size:13px}.footer{text-align:center;color:#8192aa;font-size:12px;margin-top:22px}
 @media(max-width:650px){.choice-grid{grid-template-columns:1fr}.category{min-height:82px;flex-direction:row;align-items:center}.verdicts{grid-template-columns:1fr}.site-head{align-items:flex-start;flex-direction:column}.tag{white-space:normal}}
+
+/* SiteTrace: an investigator's workstation, with a restrained case-file aesthetic */
+:root{color-scheme:dark;--bg:#171a1c;--panel:#202426;--panel2:#292e30;--line:#41494a;--text:#e8e4d9;--muted:#a8aaa2;--green:#a8c58a;--red:#df8067;--gold:#e0ad58;--blue:#d0a45d}
+body{background:#171a1c;color:#e8e4d9;font-family:Arial,Helvetica,sans-serif}
+.wrap{width:min(900px,calc(100% - 32px));padding:22px 0 42px}
+header{border-bottom:1px solid #41494a;padding:0 0 17px;margin-bottom:18px}
+.shield{width:44px;height:44px;border-radius:4px;background:#b47b3c;color:#171a1c;font:800 13px/1 Arial;box-shadow:none}
+h1,h2,h3{font-family:Georgia,'Times New Roman',serif;letter-spacing:-.025em}
+h1{font-size:clamp(27px,4vw,38px);font-weight:600}
+header p{font-size:13px;letter-spacing:.04em;text-transform:uppercase}
+.panel{background:#202426;border:1px solid #41494a;border-radius:5px;box-shadow:none;padding:clamp(17px,3vw,25px);margin:13px 0}
+.topline{font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.stat{background:#171a1c;border:1px solid #41494a;border-radius:3px;padding:6px 10px}.stat b{color:#e0ad58}
+.progress{height:4px;border-radius:0;background:#343a3b}.progress>div{background:#c18b4c;border-radius:0}
+button{border:1px solid #59615e;background:#303738;color:#e8e4d9;border-radius:3px;font-weight:600;transition:background .12s,border-color .12s}
+button:hover{transform:none;border-color:#d0a45d;background:#3b4140}
+button:focus-visible{outline:2px solid #e0ad58;outline-offset:3px}
+.primary{background:#b47b3c;border-color:#b47b3c;color:#171a1c}.primary:hover{background:#d09a55;border-color:#d09a55}
+.choice-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.category{min-height:84px;background:#292e30;border:1px solid #41494a;display:flex;flex-direction:row;justify-content:flex-start;align-items:center;gap:13px}
+.category span:first-child{font:700 17px Georgia,serif;color:#d0a45d;border-right:1px solid #59615e;padding-right:13px}
+.category small,.sub{color:#b4b4aa}
+.cluebox{background:#191e20;border:1px solid #41494a;border-radius:3px}.cluebox h3{font-size:18px}
+.searchbar{background:#e3dfd3;color:#242726;border-radius:3px;border:1px solid #b7b1a4;font-family:Georgia,serif}.searchbar b{color:#8c5d2e}
+.results{gap:0;border-top:1px solid #41494a}
+.site{border:0;border-bottom:1px solid #41494a;border-radius:0;background:transparent;padding:14px 8px}.site:hover{background:#292e30}
+.site-head{justify-content:flex-start}.domain{color:#d8b77d}.site p{color:#b4b4aa}
+.tag{border-radius:2px;border-color:#59615e;color:#c4c3b9}
+.feedback{border-radius:3px;background:#191e20}.feedback.good{border-color:#77956b}.feedback.bad{border-color:#b86e5c}
+.safe{border-radius:3px;background:#26352a;border-color:#77956b}.unsafe{border-radius:3px;background:#3a2925;border-color:#b86e5c}
+.footer{text-align:left;color:#8d887e;font-size:12px;margin-top:22px;border-top:1px solid #514a3f;padding-top:13px}
+@media(max-width:650px){.choice-grid{grid-template-columns:1fr}.category{min-height:66px}.verdicts{grid-template-columns:1fr}}
+
 </style>
 </head>
 <body>
 <div class="wrap">
-<header><div class="shield" aria-hidden="true">🛡️</div><div><h1>Website Detective</h1><p>A Windows Defender-inspired cyber-safety game</p></div></header>
+<header><div class="shield" aria-hidden="true">WD</div><div><h1>SiteTrace</h1><p>THE WEB SAFETY FILES / CASEWORK SIMULATOR</p></div></header>
 <section class="panel">
  <div class="topline"><span>TRAINING SIMULATION · NO REAL WEBSITES ARE OPENED</span><div class="stats"><span class="stat">Score: <b id="score">0</b></span><span class="stat">Streak: <b id="streak">0</b></span><span class="stat">Round: <b id="round">0</b></span></div></div>
  <div class="progress"><div id="progress"></div></div>
- <div id="intro"><h2>Can you spot a fake website?</h2><p class="sub">Choose what you want to search for. You'll get three fictional search results. Inspect their clues, then decide which ones look safe and which ones look suspicious.</p><div class="cluebox"><h3>How to play</h3><ul><li>Pick one of three search topics each round.</li><li>Open each result and investigate its URL and warning signs.</li><li>Make a safe or suspicious verdict. Earn points for correct calls.</li></ul></div><p class="muted">Real-world tip: a URL alone cannot prove a site is malware-free. This game teaches warning signs, not real-time website scanning.</p><button class="primary" id="start">Start game</button></div>
+ <div id="intro"><h2>Can you spot a fake website?</h2><p class="sub">Choose what you want to search for. You'll get three fictional search results. Inspect their clues, then decide which ones look safe and which ones look suspicious.</p><div class="cluebox"><h3>Field notes</h3><ul><li>Choose a subject from the three searches on offer.</li><li>Inspect the address and the details before making a call.</li><li>Mark each result as safe or suspicious. Good judgement earns points.</li></ul></div><p class="muted">Real-world tip: a URL alone cannot prove a site is malware-free. This game teaches warning signs, not real-time website scanning.</p><button class="primary" id="start">Start game</button></div>
  <div id="topic" class="hidden"><h2>What do you want to search for?</h2><p class="sub">Choose one topic for this round.</p><div class="choice-grid" id="topics"></div></div>
  <div id="hunt" class="hidden"><div class="topline"><span id="topicLabel">Search results</span><span id="checked">0 of 3 inspected</span></div><div class="searchbar"><b>⌕</b><span id="searchText">Search</span></div><div class="results" id="results"></div><div id="inspect" class="hidden"><div class="cluebox"><h3 id="inspectTitle">Website inspection</h3><div class="muted" id="inspectDomain"></div><ul id="clues"></ul></div><p class="sub">Based on the clues, what is your verdict?</p><div class="verdicts"><button class="safe" id="safeBtn">✓ Looks safe</button><button class="unsafe" id="unsafeBtn">⚠ Suspicious / fake</button></div><div id="feedback" class="feedback hidden" aria-live="polite"></div></div></div>
  <div id="end" class="hidden"><h2>Round complete</h2><p class="sub" id="roundSummary"></p><button class="primary" id="next">Choose another search</button></div>
@@ -43,13 +76,13 @@ button:hover{transform:translateY(-1px);border-color:var(--blue);background:#284
 </div>
 <script>
 const topics=[
- {name:"Games",icon:"🎮",query:"free online games"},
- {name:"Music",icon:"🎧",query:"music streaming"},
- {name:"Social media",icon:"💬",query:"social media"},
- {name:"Shopping",icon:"🛍️",query:"online shopping"},
- {name:"Videos",icon:"▶️",query:"video sharing"},
- {name:"Downloads",icon:"📥",query:"free app downloads"},
- {name:"Gaming rewards",icon:"🏆",query:"gaming rewards"}
+ {name:"Games",icon:"G",query:"free online games"},
+ {name:"Music",icon:"M",query:"music streaming"},
+ {name:"Social media",icon:"S",query:"social media"},
+ {name:"Shopping",icon:"B",query:"online shopping"},
+ {name:"Videos",icon:"V",query:"video sharing"},
+ {name:"Downloads",icon:"D",query:"free app downloads"},
+ {name:"Gaming rewards",icon:"R",query:"gaming rewards"}
 ];
 const bank={
  Games:[
