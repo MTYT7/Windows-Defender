@@ -215,7 +215,7 @@ const bank={
   {name:"Prompt Workshop",domain:"promptworkshop.example",desc:"Explore guides for writing better prompts.",safe:true,clues:["The site explains its tools and limits.","No unusual permissions are requested.","The domain matches its name."],why:"Check privacy terms before entering personal information into AI tools."},
   {name:"AI Premium Unlocker",domain:"free-ai-premium.example.account-verify.example",desc:"Get unlimited premium AI. Enter your email password to activate.",safe:false,clues:["The page asks for your email password, which it should not need.","It promises premium access for free.","The address is unrelated to a known provider."],why:"Never share your email password to unlock a third-party service."},
   {name:"Model Directory",domain:"modeldirectory.example",desc:"Browse descriptions of fictional AI models.",safe:true,clues:["The page is informational.","It does not demand credentials.","The domain matches the directory name."],why:"No obvious scam signals appear in this example."}
-
+ ]
 };
 let score=0,streak=0,round=0,topic=null,sites=[],selected=null,inspected=new Set(),answered=new Set(),roundPoints=0,health=100,cash=0,protectors=0;
 const difficultyLevels=["Easy","Normal","Hard"];
