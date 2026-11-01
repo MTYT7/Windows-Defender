@@ -97,26 +97,15 @@ button:hover{transform:none}
 .topic-grid .category{min-height:55px}
 @media(max-width:520px){.difficulty-grid{grid-template-columns:1fr}.difficulty{flex-direction:row;align-items:center;justify-content:space-between}.topic-grid{grid-template-columns:1fr}}
 
-/* VLSI Circuit Breaker 2.0 inspired fail screen */
-.lester-overlay{position:fixed;inset:0;z-index:100;display:grid;place-items:center;background:#000e;opacity:0;pointer-events:none}
+/* Actual GTA VLSI Circuit Breaker 2.0 success capture */
+.lester-overlay{position:fixed;inset:0;z-index:100;display:grid;place-items:center;background:#000e;opacity:0;pointer-events:none;transition:opacity .08s}
 .lester-overlay.play{opacity:1}
-.lester-screen{position:relative;width:min(567px,94vw);aspect-ratio:567/452;overflow:hidden;background:radial-gradient(ellipse at 50% 45%,#06442e 0,#002116 60%,#000b08 100%);border:1px solid #08734c;box-shadow:0 0 35px #00ff8a35,inset 0 0 55px #00ff8a18;color:#48f5a1;font-family:monospace;text-align:center;animation:none}
-.lester-screen:before{content:"";position:absolute;inset:0;opacity:.22;background:repeating-linear-gradient(0deg,transparent 0 3px,#00ff9a 4px,transparent 5px)}
-.lester-screen:after{content:"";position:absolute;inset:-50%;background:repeating-linear-gradient(115deg,transparent 0 38px,#00e98713 39px 76px);animation:vlsiSweep 1.4s linear infinite}
-.lester-heading{position:absolute;top:3%;left:0;width:100%;font-size:clamp(14px,3vw,27px);letter-spacing:.13em;color:#5fffb0;text-shadow:0 0 9px #00ff91}
-.lester-sub{position:absolute;top:12%;width:100%;font-size:9px;letter-spacing:.3em;color:#3aa879}
-.lester-circuit{position:absolute;inset:18% 0 0;opacity:.25;background:linear-gradient(90deg,transparent 14%,#16865b 14.2% 14.6%,transparent 14.8%),linear-gradient(0deg,transparent 28%,#16865b 28.2% 28.6%,transparent 28.8%),linear-gradient(90deg,transparent 58%,#16865b 58.2% 58.6%,transparent 58.8%);background-size:170px 130px,210px 150px,230px 170px}
-#lesterCanvas{position:absolute;left:0;top:29%;width:30%;height:51%;image-rendering:pixelated;z-index:2}
-.lester-lock{position:absolute;left:57%;top:48%;transform:translate(-50%,-50%);font-size:32px;text-shadow:0 0 12px #36ff9c}
-.lester-hacked{position:absolute;left:57%;top:56%;transform:translateX(-50%);font:clamp(17px,4vw,27px)/1 Arial,sans-serif;white-space:nowrap;color:#5dffb0;text-shadow:0 0 10px #00ff8c}
-.lester-caption{position:absolute;bottom:8%;left:0;width:100%;font-size:11px;letter-spacing:.25em;color:#40c98a}
-.lester-overlay.play .lester-screen{animation:vlsiFlicker 2.8s steps(1,end) both}
-@keyframes vlsiSweep{to{transform:translateX(25%) translateY(12%)}}
-@keyframes vlsiFlicker{0%,100%{filter:brightness(1)}9%{filter:brightness(1.6)}10%{filter:brightness(.55)}11%{filter:brightness(1.2)}42%{filter:brightness(.85)}43%{filter:brightness(1.4)}}
+.lester-screen{width:min(498px,94vw);max-height:90vh;aspect-ratio:498/389;background:#000;overflow:hidden;box-shadow:0 0 0 1px #333,0 12px 55px #000}
+.lester-screen img{display:block;width:100%;height:100%;object-fit:contain}
 </style>
 </head>
 <body>
-<div id="lesterLaugh" class="lester-overlay" aria-hidden="true"><div class="lester-screen"><div class="lester-heading">VLSI CIRCUIT BREAKER 2.0</div><div class="lester-sub">WEAKENED SECURITY DETECTED</div><div class="lester-circuit"></div><canvas id="lesterCanvas" width="132" height="190"></canvas><div class="lester-lock">▣</div><div class="lester-hacked">SYSTEM HACKED</div><div class="lester-caption">LESTER SAYS: HAHAHA</div></div></div>
+<div id="lesterLaugh" class="lester-overlay" aria-hidden="true"><div class="lester-screen"><img src="https://media1.tenor.com/m/NvLl2NbaPp8AAAAd/lester-fleeca-job-hack-hack.gif" alt="Actual GTA V VLSI Circuit Breaker 2.0 successful hack animation"></div></div>
 <div class="wrap">
 <header><div class="shield" aria-hidden="true">WD</div><div><h1>SiteTrace</h1><p>SPOT THE FAKE WEBSITE</p></div></header>
 <section class="panel">
@@ -252,44 +241,15 @@ function closeShop(){show(topic?"hunt":"intro")}
 function buyProtector(){if(cash<100){$("shopMessage").textContent="Not enough cash yet.";return}cash-=100;protectors++;$("shopMessage").textContent="Window Protector purchased. It will save you from one knockout.";stats()}
 function inspect(s){if(answered.has(s.id))return;if(selected&&!answered.has(selected.id)&&selected.id!==s.id)return;selected=s;inspected.add(s.id);[...$("results").children].forEach((card,i)=>{card.disabled=i!==s.id&&!answered.has(i)});$("inspectTitle").textContent="Website investigation #"+(s.id+1);$("inspectDomain").textContent="Website address: "+s.domain;$("toolResults").innerHTML="";$("inspect").querySelectorAll(".actions button").forEach(b=>b.disabled=false);$("clues").innerHTML="";s.clues.slice(0,difficultyInfo[s.difficulty].clues).forEach(c=>{const li=document.createElement("li");li.textContent=c;$("clues").appendChild(li)});$("feedback").className="feedback hidden";$("feedback").innerHTML="";$("inspect").classList.remove("hidden");$("checked").textContent=inspected.size+" of 3 inspected";$("safeBtn").disabled=false;$("unsafeBtn").disabled=false;$("safeBtn").onclick=()=>judge(true);$("unsafeBtn").onclick=()=>judge(false)}
 function runCheck(type){if(!selected||answered.has(selected.id))return;const safe=selected.safe;const reports={links:safe?["Connected pages mostly use the same domain. One external analytics host appears in the footer; this is common, but verify unexpected redirects.","The help page and account page share the site's main domain. A separate image host is also present.","Two links pass through a short redirect before reaching their destination. The final destinations appear consistent with the site."]:["Most navigation stays on this domain, but the account button routes through a second domain before opening a sign-in page.","A support link uses a related-looking domain with an extra word. The homepage itself does not explain the relationship.","The page loads assets from the expected domain, but its account link redirects elsewhere. Check the final address carefully."],email:safe?["The contact address uses the site's domain. The newsletter is handled by a separate mailing provider.","The sender and reply-to addresses are different, but both identify the same organisation and its listed support provider.","A generic support mailbox is listed. The domain matches, though the page gives limited staff information."]:["The sender display name matches the site, but the reply-to address uses a different domain.","The email domain looks similar to the website but adds an extra term. The message asks users to confirm account details.","The contact address is hosted elsewhere and the site gives no explanation. The message also requests a verification code."],page:safe?["One external link opens a payment or media provider. The destination is named before leaving the site.","The page contains several redirects, but they end at pages related to the stated service. Check each final URL.","Most links are internal. A few open third-party resources with clear labels and expected purposes."]:["A button label says 'Continue', but its destination is a separate account-claim domain.","The page redirects through an unrelated domain. The final page asks for information that is not needed for the advertised feature.","A download link opens a file-hosting page with a different publisher name and no clear explanation."],security:safe?["The connection is encrypted and the certificate name matches the domain. This confirms the connection, not the honesty of the operator.","The certificate is valid for this domain. The page also lists a privacy policy and contact route; neither guarantees legitimacy.","The site uses HTTPS and consistent branding. You still need to judge its requests and ownership independently."]:["The connection is encrypted, but the certificate only proves control of this domain—not that the business is genuine.","The certificate is valid for the displayed domain, although the domain differs from the organisation named on the page.","HTTPS is present, but the page requests a password or one-time code for an unrelated reward. Encryption does not make that safe."]};const options=reports[type];const li=document.createElement("li");li.textContent=options[Math.floor(Math.random()*options.length)];$("toolResults").appendChild(li);const buttons=$("inspect").querySelectorAll(".actions button");const index={links:0,email:1,page:2,security:3}[type];if(buttons[index])buttons[index].disabled=true}
-function drawLesterFrame(ctx,frame){
- const p=[
- "................",
- ".....GGGGGG.....",
- "...GGGGGGGGGG...",
- "..GGGGGGGGGGGG..",
- ".GGGGGGGGGGGGGG.",
- ".GGGGGGGGGGGGGG.",
- "GGGGGGGGGGGGGGGG",
- "GGGDDGGGGGGDDGGG",
- "GGGDDGGGGGGDDGGG",
- "GGGGGGGGGGGGGGGG",
- ".GGGGGDDDDGGGGG.",
- ".GGGGGGGGGGGGGG.",
- "..GGGGGGGGGGGG..",
- "...GGGGGGGGGG...",
- "....GGGGGGGG....",
- ".....GGGGGG.....",
- "......GGGG......",
- "......GGGG......",
- ".....GG..GG.....",
- "....GG....GG...."
- ];
- const scale=6,ox=18+frame.x,oy=18+frame.y;
- ctx.save();ctx.translate(66+frame.x,95+frame.y);ctx.rotate(frame.r);ctx.translate(-66-frame.x,-95-frame.y);
- for(let y=0;y<p.length;y++)for(let x=0;x<p[y].length;x++){const ch=p[y][x];if(ch==="G"){ctx.fillStyle=((x+y+frame.n)%5===0)?"#b2ffb9":"#28d889";ctx.fillRect(ox+x*scale,oy+y*scale,scale,scale)}else if(ch==="D"){ctx.fillStyle="#003d2c";ctx.fillRect(ox+x*scale,oy+y*scale,scale,scale)}}
- ctx.restore();
-}
-let lesterAnimFrame=0,lesterAnimStart=0;
+let lesterAnimTimer=null;
 function playLesterLaugh(){
- const overlay=$("lesterLaugh"),canvas=$("lesterCanvas"),ctx=canvas.getContext("2d");if(!overlay||!ctx)return;
- overlay.classList.remove("play");cancelAnimationFrame(lesterAnimFrame);void overlay.offsetWidth;overlay.classList.add("play");lesterAnimStart=performance.now();
- const frames=[{x:0,y:0,r:-.08,n:0},{x:8,y:-8,r:.07,n:1},{x:18,y:2,r:-.1,n:2},{x:5,y:-13,r:.1,n:3},{x:22,y:0,r:-.06,n:4},{x:10,y:-8,r:.08,n:5},{x:0,y:2,r:-.04,n:6},{x:15,y:-11,r:.07,n:7}];
- function draw(now){const elapsed=now-lesterAnimStart,f=frames[Math.floor(elapsed/95)%frames.length];ctx.clearRect(0,0,132,190);drawLesterFrame(ctx,f);
-  if(Math.random()<.2){ctx.fillStyle="rgba(100,255,170,.3)";ctx.fillRect(0,Math.random()*190,132,2+Math.random()*5)}
-  if(elapsed<2800)lesterAnimFrame=requestAnimationFrame(draw);else{overlay.classList.remove("play");ctx.clearRect(0,0,132,190)}
- }
- lesterAnimFrame=requestAnimationFrame(draw);
+ const overlay=$("lesterLaugh");
+ if(!overlay)return;
+ clearTimeout(lesterAnimTimer);
+ overlay.classList.remove("play");
+ void overlay.offsetWidth;
+ overlay.classList.add("play");
+ lesterAnimTimer=setTimeout(()=>overlay.classList.remove("play"),2700);
 }
 function judge(choice){if(!selected||answered.has(selected.id))return;const s=selected,correct=choice===s.safe;if(!correct)playLesterLaugh();answered.add(s.id);[...$("results").children].forEach((card,i)=>{card.disabled=answered.has(i)});let damage=0,saved=false;if(correct){const points=difficultyInfo[s.difficulty].points;score+=points;streak++;roundPoints+=points;cash+=25}else{streak=0;damage=s.safe?8:s.malware.damage;if(health-damage<=0&&protectors>0){protectors--;health=35;saved=true}else{health=Math.max(0,health-damage)}}stats();const f=$("feedback");f.className="feedback "+(correct?"good":"bad");f.innerHTML="<h3>"+(correct?"Correct call! +"+difficultyInfo[s.difficulty].points+" points":"Not quite — "+(s.safe?"this example looks safe":"this example is suspicious"))+"</h3>"+(!correct?"<p><b>"+(s.safe?"False alarm":"Threat detected: "+s.malware.name)+"</b> — "+damage+" health lost.</p>":"")+(saved?"<p><b>Window Protector activated!</b> It saved you and restored 35 health. One protector used.</p>":"")+(health===0?"<p><b>Your health has run out. Investigation over!</b></p>":"")+"<p><b>Decision locked.</b> You cannot change this answer.</p><p>"+(correct?"You earned 25 cash.":"No cash earned.")+"</p><p>"+s.why+"</p><p><b>Remember:</b> Never use a search-result label alone as proof. Check the exact domain, avoid unexpected downloads, and never share passwords or security codes.</p>";$("safeBtn").disabled=true;$("unsafeBtn").disabled=true;const card=[...$("results").children].find(x=>x.textContent.includes(s.name));if(card){card.style.opacity=".55";card.querySelector(".tag").textContent=correct?"Correct":"Reviewed"}if(health===0){const n=document.createElement("button");n.className="primary";n.textContent="Restart game";n.onclick=restartGame;f.appendChild(n);$("safeBtn").disabled=true;$("unsafeBtn").disabled=true;$("endTitle").textContent="Investigation over";$("roundSummary").textContent="You ran out of health. Final score: "+score+".";show("end")}else{const n=document.createElement("button");n.className="primary";n.textContent="Randomise websites";n.onclick=rerollSites;f.appendChild(n)}}
 function finishRound(){$("endTitle").textContent="Round complete";$("roundSummary").textContent="You earned "+roundPoints+" points this round. Total score: "+score+". Current streak: "+streak+". Health remaining: "+health+"." ;show("end")}
