@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#101827">
+<title>Windows Defender — Website Detective</title>
+<style>
+:root{color-scheme:dark;--bg:#0b1220;--panel:#151f30;--panel2:#1b2940;--line:#2b3b55;--text:#edf4ff;--muted:#9fb0c8;--green:#35d08a;--red:#ff6577;--gold:#ffd166;--blue:#67b7ff}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#1b3150 0,#0b1220 55%);color:var(--text);font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;min-height:100vh}
+.wrap{width:min(980px,calc(100% - 28px));margin:0 auto;padding:28px 0 56px}
+header{display:flex;align-items:center;gap:14px;margin-bottom:24px}.shield{width:52px;height:52px;border-radius:16px;background:linear-gradient(145deg,#167cbd,#174c91);display:grid;place-items:center;font-size:28px;box-shadow:0 8px 28px #0006}
+h1{font-size:clamp(24px,5vw,36px);line-height:1.1;margin:0}header p{margin:5px 0 0;color:var(--muted)}
+.panel{background:linear-gradient(160deg,#18263a,#111b2b);border:1px solid var(--line);border-radius:18px;padding:clamp(17px,3vw,26px);box-shadow:0 14px 38px #0003;margin:16px 0}
+.topline{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:var(--muted);font-size:14px}.stats{display:flex;gap:10px;flex-wrap:wrap}.stat{background:#0c1625;border:1px solid var(--line);padding:8px 12px;border-radius:12px}.stat b{color:var(--text)}
+h2{margin:0 0 8px;font-size:23px}.sub{color:var(--muted);margin:0 0 18px}
+button{font:inherit;cursor:pointer;border:1px solid #416083;background:#203954;color:var(--text);padding:12px 16px;border-radius:12px;font-weight:650;transition:.15s}
+button:hover{transform:translateY(-1px);border-color:var(--blue);background:#28496b}button:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.primary{background:#0878bd;border-color:#168fd7}.primary:hover{background:#0a8bd8}.choice-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.category{min-height:120px;text-align:left;background:#17283d;display:flex;flex-direction:column;justify-content:space-between}.category span:first-child{font-size:29px}.category small{color:var(--muted);font-weight:500}
+.hidden{display:none!important}.progress{height:8px;border-radius:9px;background:#0b1524;overflow:hidden;margin:14px 0 20px}.progress>div{height:100%;width:0;background:linear-gradient(90deg,#168fd7,#35d08a);transition:width .25s}
+.searchbar{display:flex;align-items:center;gap:10px;background:#f5f8fc;color:#1b2b40;padding:12px 15px;border-radius:12px;margin:18px 0 14px}.searchbar b{color:#2777ad}.results{display:grid;gap:10px}
+.site{width:100%;text-align:left;background:#101b2b;border:1px solid var(--line);padding:15px;border-radius:13px}.site:hover{background:#192b42}.site-head{display:flex;justify-content:space-between;gap:12px;align-items:center}.domain{font-weight:750;color:#8dcaff;overflow-wrap:anywhere}.site p{margin:5px 0 0;color:var(--muted);font-size:14px}.tag{font-size:11px;color:#c4d3e8;border:1px solid #3c526d;border-radius:99px;padding:3px 8px;white-space:nowrap}
+.cluebox{background:#0c1726;border:1px solid var(--line);border-radius:13px;padding:14px;margin:14px 0}.cluebox h3{margin:0 0 8px;font-size:16px}.cluebox ul{margin:0;padding-left:20px;color:#c1cee0}.cluebox li{margin:5px 0}
+.verdicts{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}.safe{border-color:#237c59;background:#123b32}.unsafe{border-color:#8b3d4c;background:#47202c}
+.feedback{padding:15px;border-radius:13px;margin-top:16px;border:1px solid var(--line);background:#0d1929}.feedback.good{border-color:#237c59}.feedback.bad{border-color:#8b3d4c}.feedback h3{margin:0 0 5px}.feedback p{margin:5px 0;color:#c5d3e5}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}.muted{color:var(--muted);font-size:13px}.footer{text-align:center;color:#8192aa;font-size:12px;margin-top:22px}
+@media(max-width:650px){.choice-grid{grid-template-columns:1fr}.category{min-height:82px;flex-direction:row;align-items:center}.verdicts{grid-template-columns:1fr}.site-head{align-items:flex-start;flex-direction:column}.tag{white-space:normal}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header><div class="shield" aria-hidden="true">🛡️</div><div><h1>Website Detective</h1><p>A Windows Defender-inspired cyber-safety game</p></div></header>
+<section class="panel">
+ <div class="topline"><span>TRAINING SIMULATION · NO REAL WEBSITES ARE OPENED</span><div class="stats"><span class="stat">Score: <b id="score">0</b></span><span class="stat">Streak: <b id="streak">0</b></span><span class="stat">Round: <b id="round">0</b></span></div></div>
+ <div class="progress"><div id="progress"></div></div>
+ <div id="intro"><h2>Can you spot a fake website?</h2><p class="sub">Choose what you want to search for. You'll get three fictional search results. Inspect their clues, then decide which ones look safe and which ones look suspicious.</p><div class="cluebox"><h3>How to play</h3><ul><li>Pick one of three search topics each round.</li><li>Open each result and investigate its URL and warning signs.</li><li>Make a safe or suspicious verdict. Earn points for correct calls.</li></ul></div><p class="muted">Real-world tip: a URL alone cannot prove a site is malware-free. This game teaches warning signs, not real-time website scanning.</p><button class="primary" id="start">Start game</button></div>
+ <div id="topic" class="hidden"><h2>What do you want to search for?</h2><p class="sub">Choose one topic for this round.</p><div class="choice-grid" id="topics"></div></div>
+ <div id="hunt" class="hidden"><div class="topline"><span id="topicLabel">Search results</span><span id="checked">0 of 3 inspected</span></div><div class="searchbar"><b>⌕</b><span id="searchText">Search</span></div><div class="results" id="results"></div><div id="inspect" class="hidden"><div class="cluebox"><h3 id="inspectTitle">Website inspection</h3><div class="muted" id="inspectDomain"></div><ul id="clues"></ul></div><p class="sub">Based on the clues, what is your verdict?</p><div class="verdicts"><button class="safe" id="safeBtn">✓ Looks safe</button><button class="unsafe" id="unsafeBtn">⚠ Suspicious / fake</button></div><div id="feedback" class="feedback hidden" aria-live="polite"></div></div></div>
+ <div id="end" class="hidden"><h2>Round complete</h2><p class="sub" id="roundSummary"></p><button class="primary" id="next">Choose another search</button></div>
+</section>
+<p class="footer">Website Detective is a fictional learning game. All example domains use reserved .example addresses.</p>
+</div>
+<script>
+const topics=[
+ {name:"Games",icon:"🎮",query:"free online games"},
+ {name:"Music",icon:"🎧",query:"music streaming"},
+ {name:"Social media",icon:"💬",query:"social media"},
+ {name:"Shopping",icon:"🛍️",query:"online shopping"},
+ {name:"Videos",icon:"▶️",query:"video sharing"},
+ {name:"Downloads",icon:"📥",query:"free app downloads"},
+ {name:"Gaming rewards",icon:"🏆",query:"gaming rewards"}
+];
+const bank={
+ Games:[
+  {name:"PixelPlay",domain:"pixelplay.example",desc:"Play browser games and discover new indie releases.",safe:true,clues:["The domain is a simple, readable name that matches the service.","The page does not ask for your password just to browse games.","No urgent pop-ups or unexpected downloads are shown."],why:"The example has a consistent domain and no pressure tactics. That is a good sign, though real sites still need checking."},
+  {name:"Free Robux Generator",domain:"robux-gifts-free.example.login-check.example",desc:"Claim unlimited game currency now — verify your account first!",safe:false,clues:["The address uses a long chain of words and a misleading subdomain.","It promises free currency and asks you to sign in to claim it.","The message creates excitement and pressure to act quickly."],why:"Free-currency promises and credential requests are common phishing warning signs. Never enter your account details."},
+  {name:"ArcadeCloud",domain:"arcadecloud.example",desc:"A catalogue of small games with clear publisher information.",safe:true,clues:["The domain matches the site name.","Publisher and contact details are easy to find.","The page does not demand personal information before showing its games."],why:"The details are consistent and there are no obvious scam signals in this fictional example."}
+ ],
+ Music:[
+  {name:"TuneHarbour",domain:"tuneharbour.example",desc:"Listen to playlists and browse independent artists.",safe:true,clues:["The domain is short and matches the service name.","The page explains its features and privacy information.","No unexpected login or payment demand appears."],why:"A consistent address and transparent information are reassuring signs."},
+  {name:"Premium Music Free",domain:"tuneharbour-premium-free.example.verify-now.example",desc:"Unlock every paid song free. Enter your music account password.",safe:false,clues:["The address does not match the claimed service.","It asks for your password to unlock something that sounds too good to be true.","The offer uses a free-premium promise to tempt users."],why:"A mismatched domain and password request are major warning signs. Use the official app or site instead."},
+  {name:"SoundShelf",domain:"soundshelf.example",desc:"Discover albums, artist pages and curated playlists.",safe:true,clues:["The domain is readable and consistent with the brand name.","The page gives clear information about subscriptions.","There are no fake countdowns or urgent security warnings."],why:"Nothing in this example strongly suggests impersonation or phishing."}
+ ],
+ "Social media":[
+  {name:"Chatterbox",domain:"chatterbox.example",desc:"A community to share posts and message friends.",safe:true,clues:["The address matches the service name.","The sign-in page is reached from the same domain.","The page does not claim your account will be deleted immediately."],why:"Consistent domains and a lack of pressure tactics are positive signs."},
+  {name:"Account Security Team",domain:"chatterbox.example.security-alert-login.example",desc:"Your account will be deleted in 10 minutes. Sign in here to stop it.",safe:false,clues:["The actual registered-looking domain at the end is not chatterbox.example.","It threatens immediate account deletion to rush you.","It asks you to sign in through an unfamiliar address."],why:"Threats, urgency and misleading addresses are classic phishing clues. Open the service directly using its known app or bookmark."},
+  {name:"FriendSpace",domain:"friendspace.example",desc:"Share updates with friends and manage your privacy settings.",safe:true,clues:["The domain is short and matches the service name.","Privacy and help links are visible.","There is no unexpected request for payment or passwords."],why:"The example has consistent branding and no obvious pressure or credential tricks."}
+ ],
+ Shopping:[
+  {name:"Northstar Store",domain:"northstar-store.example",desc:"Browse clothing, prices, delivery details and returns.",safe:true,clues:["The address matches the shop name.","Delivery, returns and contact information are clearly displayed.","The checkout does not ask for unrelated information."],why:"Clear policies and consistent details are good signs, although real shops should still be researched."},
+  {name:"Mega Bargain Outlet",domain:"northstar-store.example.deals-checkout.example",desc:"90% off everything for the next 60 seconds. Pay by gift card.",safe:false,clues:["The address is not the real shop's domain despite using its name as a subdomain.","A huge discount and countdown pressure you to act.","Gift-card-only payment is a serious warning sign."],why:"Lookalike domains, unrealistic discounts and unusual payment methods strongly suggest a scam."},
+  {name:"CraftCorner",domain:"craftcorner.example",desc:"Independent handmade goods with seller profiles and buyer guidance.",safe:true,clues:["The domain matches the shop name.","Seller details and buyer guidance are available.","No urgent pop-up demands payment."],why:"The site presents consistent information and avoids common pressure tactics."}
+ ],
+ Videos:[
+  {name:"ClipCloud",domain:"clipcloud.example",desc:"Watch creator videos and explore channels.",safe:true,clues:["The address matches the service name.","The page lets you browse without installing an unknown file.","Help and privacy information are easy to find."],why:"The domain and page behaviour are consistent in this fictional example."},
+  {name:"Watch Anything HD",domain:"clipcloud-free-hd.example.player-update.example",desc:"Install this special player update to continue watching.",safe:false,clues:["The domain is not the official-looking ClipCloud address.","It asks you to install an unexpected player to view content.","Unexpected downloads can contain unwanted or malicious software."],why:"Do not install surprise players or updates from unfamiliar pages. Use your device's official update system."},
+  {name:"ReelRoom",domain:"reelroom.example",desc:"Browse short films and creator channels.",safe:true,clues:["The domain is consistent with the site name.","No unexpected download is required.","The page does not use fake virus warnings."],why:"There are no obvious suspicious clues in this fictional result."}
+ ],
+ Downloads:[
+  {name:"OpenApp Library",domain:"openapplibrary.example",desc:"Browse software with publisher names and version notes.",safe:true,clues:["The site identifies software publishers.","Download details and version information are shown.","It does not tell you to disable antivirus protection."],why:"Publisher information and transparent download details are positive signs. Always scan downloads."},
+  {name:"SUPER FAST PC BOOSTER",domain:"free-pc-fix-now.example.download-security.example",desc:"Your computer has 38 viruses! Download our cleaner immediately.",safe:false,clues:["A website cannot reliably know your computer has exactly 38 viruses from a pop-up.","It uses fear and urgency to make you download something.","The domain is unrelated to a trusted software publisher."],why:"Fake virus alerts are a common scare tactic. Close the tab; do not download the offered cleaner."},
+  {name:"CodeGarden",domain:"codegarden.example",desc:"Find open-source tools with project pages and source links.",safe:true,clues:["Project and publisher information are available.","The domain matches the service name.","It does not ask you to disable security software."],why:"The example provides transparent project information and avoids scare tactics."}
+ ],
+ "Gaming rewards":[
+  {name:"QuestPoints",domain:"questpoints.example",desc:"Track challenges and earn badges for completing game tasks.",safe:true,clues:["The domain matches the service name.","Rewards and rules are explained clearly.","It does not ask for your game password."],why:"Clear rules and no credential request are reassuring signs."},
+  {name:"Instant Rare Skins",domain:"questpoints.example.claim-prize-now.example",desc:"You won a rare skin! Enter your game login and 2FA code.",safe:false,clues:["The address is not the official game or rewards domain.","It asks for both a password and a two-factor authentication code.","An unexpected prize is used to tempt you."],why:"Never share passwords or 2FA codes. Legitimate support teams will not ask for them."},
+  {name:"BadgeBase",domain:"badges.example",desc:"View achievement guides and community-made challenges.",safe:true,clues:["The domain is consistent with the site name.","The page offers guides rather than asking for account access.","No urgent prize claim or download is pushed."],why:"The example has no strong phishing clues."}
+ ]
+};
+let score=0,streak=0,round=0,topic=null,sites=[],selected=null,inspected=new Set(),answered=new Set(),roundPoints=0;
+const $=id=>document.getElementById(id);
+function show(id){["intro","topic","hunt","end"].forEach(x=>$(x).classList.toggle("hidden",x!==id))}
+function stats(){$("score").textContent=score;$("streak").textContent=streak;$("round").textContent=round;$("progress").style.width=(answered.size/3*100)+"%"}
+function shuffle(a){return [...a].sort(()=>Math.random()-.5)}
+function start(){show("topic");$("topics").innerHTML="";shuffle(topics).slice(0,3).forEach(t=>{const b=document.createElement("button");b.className="category";b.innerHTML="<span>"+t.icon+"</span><span><b>"+t.name+"</b><br><small>Search "+t.name.toLowerCase()+"</small></span>";b.onclick=()=>beginRound(t);$("topics").appendChild(b)})}
+function beginRound(t){topic=t;round++;roundPoints=0;inspected=new Set();answered=new Set();sites=shuffle(bank[t.name]).map((s,i)=>({...s,id:i}));$("topicLabel").textContent="Topic: "+t.name;$("searchText").textContent=t.query;$("results").innerHTML="";$("inspect").classList.add("hidden");sites.forEach(s=>{const b=document.createElement("button");b.className="site";b.innerHTML='<div class="site-head"><span class="domain">'+s.name+'</span><span class="tag">Search result · Inspect</span></div><p>'+s.desc+'</p><p class="domain">'+s.domain+'</p>';b.onclick=()=>inspect(s);$("results").appendChild(b)});$("checked").textContent="0 of 3 inspected";stats();show("hunt")}
+function inspect(s){if(answered.has(s.id))return;selected=s;inspected.add(s.id);$("inspectTitle").textContent=s.name;$("inspectDomain").textContent="Website address: "+s.domain;$("clues").innerHTML="";s.clues.forEach(c=>{const li=document.createElement("li");li.textContent=c;$("clues").appendChild(li)});$("feedback").className="feedback hidden";$("feedback").innerHTML="";$("inspect").classList.remove("hidden");$("checked").textContent=inspected.size+" of 3 inspected";$("safeBtn").disabled=false;$("unsafeBtn").disabled=false;$("safeBtn").onclick=()=>judge(true);$("unsafeBtn").onclick=()=>judge(false)}
+function judge(choice){if(!selected||answered.has(selected.id))return;const s=selected,correct=choice===s.safe;answered.add(s.id);if(correct){score+=100;streak++;roundPoints+=100}else{streak=0}stats();const f=$("feedback");f.className="feedback "+(correct?"good":"bad");f.innerHTML="<h3>"+(correct?"Correct call! +100 points":"Not quite — "+(s.safe?"this example looks safe":"this example is suspicious"))+"</h3><p>"+s.why+"</p><p><b>Remember:</b> Never use a search-result label alone as proof. Check the exact domain, avoid unexpected downloads, and never share passwords or security codes.</p>";$("safeBtn").disabled=true;$("unsafeBtn").disabled=true;const card=[...$("results").children].find(x=>x.textContent.includes(s.name));if(card){card.style.opacity=".55";card.querySelector(".tag").textContent=correct?"Correct":"Reviewed"}if(answered.size===3){const n=document.createElement("button");n.className="primary";n.textContent="Finish round";n.onclick=finishRound;f.appendChild(n)}}
+function finishRound(){$("roundSummary").textContent="You earned "+roundPoints+" points this round. Total score: "+score+". Current streak: "+streak+"." ;show("end")}
+$("start").onclick=start;$("next").onclick=start;stats();
+</script>
+</body>
+</html>
