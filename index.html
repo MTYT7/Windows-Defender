@@ -59,20 +59,47 @@ button:focus-visible{outline:2px solid #e0ad58;outline-offset:3px}
 .footer{text-align:left;color:#8d887e;font-size:12px;margin-top:22px;border-top:1px solid #514a3f;padding-top:13px}
 @media(max-width:650px){.choice-grid{grid-template-columns:1fr}.category{min-height:66px}.verdicts{grid-template-columns:1fr}}
 
+
+/* Simplified layout */
+body{background:#171a1c;font-family:Arial,Helvetica,sans-serif}
+.wrap{width:min(720px,calc(100% - 28px));padding-top:18px}
+header{gap:10px;margin-bottom:12px;padding-bottom:10px}
+.shield{display:none}
+h1,h2,h3{font-family:Arial,Helvetica,sans-serif;letter-spacing:0}
+h1{font-size:27px}
+header p{font-size:12px}
+.panel{background:#202426;border:1px solid #41494a;border-radius:4px;box-shadow:none;padding:16px;margin:10px 0}
+.topline{font-size:12px}
+.stat{border-radius:3px;padding:5px 8px}
+.progress{margin:10px 0 14px}
+h2{font-size:21px}
+.sub{margin-bottom:12px}
+.cluebox{padding:11px;margin:10px 0}
+button{border-radius:3px;padding:10px 13px;box-shadow:none}
+button:hover{transform:none}
+.choice-grid{gap:7px}
+.category{min-height:62px;padding:10px}
+.category span:first-child{font-size:15px}
+.searchbar{margin:12px 0 8px;padding:9px 12px}
+.site{padding:11px 7px}
+.site p{margin-top:3px}
+.verdicts{margin-top:10px}
+.feedback{padding:11px;margin-top:10px}
+.footer{margin-top:12px}
 </style>
 </head>
 <body>
 <div class="wrap">
-<header><div class="shield" aria-hidden="true">WD</div><div><h1>SiteTrace</h1><p>THE WEB SAFETY FILES / CASEWORK SIMULATOR</p></div></header>
+<header><div class="shield" aria-hidden="true">WD</div><div><h1>SiteTrace</h1><p>SPOT THE FAKE WEBSITE</p></div></header>
 <section class="panel">
  <div class="topline"><span>TRAINING SIMULATION · NO REAL WEBSITES ARE OPENED</span><div class="stats"><span class="stat">Score: <b id="score">0</b></span><span class="stat">Streak: <b id="streak">0</b></span><span class="stat">Round: <b id="round">0</b></span></div></div>
  <div class="progress"><div id="progress"></div></div>
- <div id="intro"><h2>Not every result deserves your trust.</h2><p class="sub">Pick a search. Open each result. Study the address, the offer and what the page asks you to do. Then make the call.</p><div class="cluebox"><h3>Field notes</h3><ul><li>Choose a subject from the three searches on offer.</li><li>Inspect the address and the details before making a call.</li><li>Mark each result as safe or suspicious. Good judgement earns points.</li></ul></div><p class="muted">Real-world tip: a URL alone cannot prove a site is malware-free. This game teaches warning signs, not real-time website scanning.</p><button class="primary" id="start">Start game</button></div>
+ <div id="intro"><h2>Can you spot a fake website?</h2><p class="sub">Pick a topic, check three websites and decide which ones look suspicious.</p><p class="muted">You get 100 points for each correct answer. These are pretend websites, not live virus scans.</p><button class="primary" id="start">Play</button></div>
  <div id="topic" class="hidden"><h2>What do you want to search for?</h2><p class="sub">Choose one topic for this round.</p><div class="choice-grid" id="topics"></div></div>
  <div id="hunt" class="hidden"><div class="topline"><span id="topicLabel">Search results</span><span id="checked">0 of 3 inspected</span></div><div class="searchbar"><b>⌕</b><span id="searchText">Search</span></div><div class="results" id="results"></div><div id="inspect" class="hidden"><div class="cluebox"><h3 id="inspectTitle">Website inspection</h3><div class="muted" id="inspectDomain"></div><ul id="clues"></ul></div><p class="sub">Based on the clues, what is your verdict?</p><div class="verdicts"><button class="safe" id="safeBtn">✓ Looks safe</button><button class="unsafe" id="unsafeBtn">⚠ Suspicious / fake</button></div><div id="feedback" class="feedback hidden" aria-live="polite"></div></div></div>
  <div id="end" class="hidden"><h2>Round complete</h2><p class="sub" id="roundSummary"></p><button class="primary" id="next">Choose another search</button></div>
 </section>
-<p class="footer">Website Detective is a fictional learning game. All example domains use reserved .example addresses.</p>
+<p class="footer">Practice game only. All websites are fictional.</p>
 </div>
 <script>
 const topics=[
