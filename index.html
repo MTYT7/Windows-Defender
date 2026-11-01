@@ -112,13 +112,22 @@ button:hover{transform:none}
 </div>
 <script>
 const topics=[
- {name:"Games",icon:"G",query:"free online games"},
- {name:"Music",icon:"M",query:"music streaming"},
+ {name:"Minecraft",icon:"M",query:"Minecraft servers and mods"},
+ {name:"Roblox",icon:"R",query:"Roblox games and rewards"},
+ {name:"Fortnite",icon:"F",query:"Fortnite skins and updates"},
+ {name:"Gaming",icon:"G",query:"gaming websites"},
+ {name:"Music",icon:"U",query:"music streaming"},
  {name:"Social media",icon:"S",query:"social media"},
  {name:"Shopping",icon:"B",query:"online shopping"},
  {name:"Videos",icon:"V",query:"video sharing"},
  {name:"Downloads",icon:"D",query:"free app downloads"},
- {name:"Gaming rewards",icon:"R",query:"gaming rewards"}
+ {name:"Gaming rewards",icon:"P",query:"gaming rewards"},
+ {name:"Technology",icon:"T",query:"technology and gadgets"},
+ {name:"Movies & TV",icon:"C",query:"movies and TV streaming"},
+ {name:"Sports",icon:"A",query:"sports news"},
+ {name:"School",icon:"E",query:"school resources"},
+ {name:"Email",icon:"@",query:"email services"},
+ {name:"AI tools",icon:"AI",query:"AI tools"}
 ];
 const bank={
  Games:[
@@ -155,7 +164,57 @@ const bank={
   {name:"QuestPoints",domain:"questpoints.example",desc:"Track challenges and earn badges for completing game tasks.",safe:true,clues:["The domain matches the service name.","Rewards and rules are explained clearly.","It does not ask for your game password."],why:"Clear rules and no credential request are reassuring signs."},
   {name:"Instant Rare Skins",domain:"questpoints.example.claim-prize-now.example",desc:"You won a rare skin! Enter your game login and 2FA code.",safe:false,clues:["The address is not the official game or rewards domain.","It asks for both a password and a two-factor authentication code.","An unexpected prize is used to tempt you."],why:"Never share passwords or 2FA codes. Legitimate support teams will not ask for them."},
   {name:"BadgeBase",domain:"badges.example",desc:"View achievement guides and community-made challenges.",safe:true,clues:["The domain is consistent with the site name.","The page offers guides rather than asking for account access.","No urgent prize claim or download is pushed."],why:"The example has no strong phishing clues."}
- ]
+ ],
+ Minecraft:[
+  {name:"Minecraft Official",domain:"minecraft.net.example",desc:"News and information about Minecraft.",safe:true,clues:["The page has clear publisher information.","It does not ask for your Microsoft password on an unfamiliar page.","The address and branding are consistent."],why:"Check the publisher and exact domain before signing in."},
+  {name:"Free Minecoins Generator",domain:"minecraft-free-coins.example.claim.example",desc:"Get unlimited Minecoins. Enter your Microsoft login.",safe:false,clues:["The address is not an official Minecraft domain.","It promises unlimited currency and asks for login details.","The offer is designed to steal account credentials."],why:"Free currency generators are commonly used as bait for account theft."},
+  {name:"BlockBuild Mods",domain:"blockbuild-mods.example",desc:"Community-made building ideas and mod guides.",safe:true,clues:["The page provides author names and clear descriptions.","No forced download or password request appears.","The address is consistent with the site name."],why:"Still check mod files carefully and use trusted sources."}
+ ],
+ Roblox:[
+  {name:"Roblox Help Centre",domain:"roblox-support.example",desc:"Guides for account safety and game settings.",safe:true,clues:["The page gives clear help information.","It does not request a verification code.","No prize or urgent threat is used."],why:"Never share passwords or verification codes with third-party pages."},
+  {name:"Free Robux Claim",domain:"roblox-free-robux.example.login.example",desc:"Claim 100,000 Robux by entering your account details.",safe:false,clues:["The domain is not the official Roblox address.","It promises an unrealistic reward.","It asks for account details to claim the prize."],why:"This is a classic account phishing setup."},
+  {name:"Obby Creator Hub",domain:"obbycreator.example",desc:"Community tips for building obstacle courses.",safe:true,clues:["The page has clear community guidelines.","No unexpected login is demanded.","The domain matches its stated purpose."],why:"The example shows no obvious scam signals."}
+ ],
+ Fortnite:[
+  {name:"Battle Update News",domain:"battleupdate.example",desc:"Read fictional patch notes and gameplay news.",safe:true,clues:["The page is informational and does not ask for login details.","The publisher is clearly identified.","No suspicious download is forced."],why:"Use the official game launcher for actual updates."},
+  {name:"Free V-Bucks Now",domain:"fortnite-vbucks-free.example.verify.example",desc:"Enter your Epic account and 2FA code to receive free V-Bucks.",safe:false,clues:["The address is not an official Epic Games domain.","It asks for a password and 2FA code.","The free currency offer is designed to tempt players."],why:"Never give away account credentials or 2FA codes."},
+  {name:"Creative Map Guide",domain:"creativemapguide.example",desc:"Browse community-made island codes and tips.",safe:true,clues:["The site provides guides rather than account access.","No unexpected file is required.","The domain matches the content."],why:"The example avoids common credential theft tactics."}
+ ],
+ Gaming:[
+  {name:"Indie Game Index",domain:"indiegameindex.example",desc:"Browse independent games and developer profiles.",safe:true,clues:["Developer details are available.","The domain matches the site name.","No suspicious pop-ups appear."],why:"Transparent publisher information is a useful positive sign."},
+  {name:"Game Booster Installer",domain:"instant-fps-boost.example.download-now.example",desc:"Download this unknown tool and disable antivirus for best performance.",safe:false,clues:["It asks you to disable security software.","The download publisher is unknown.","The domain makes exaggerated performance claims."],why:"Never disable antivirus to install an unknown tool."},
+  {name:"Co-op Finder",domain:"coopfinder.example",desc:"Find games to play with friends.",safe:true,clues:["The service explains what it does.","No password or payment is demanded unexpectedly.","The domain is consistent."],why:"There are no strong suspicious clues in this example."}
+ ],
+ Technology:[
+  {name:"Tech Manual",domain:"techmanual.example",desc:"Read device guides and troubleshooting articles.",safe:true,clues:["The site identifies its authors.","It does not use fake security alerts.","The domain matches its purpose."],why:"Check the source and avoid downloads from unknown publishers."},
+  {name:"Critical Driver Update",domain:"urgent-driver-fix.example.install.example",desc:"Your PC is at risk. Install this driver updater immediately.",safe:false,clues:["It uses urgent scare language.","The publisher is not identified.","It pushes an unexpected executable download."],why:"Get drivers from your device maker or operating system update tools."},
+  {name:"Gadget Compare",domain:"gadgetcompare.example",desc:"Compare fictional device specifications and features.",safe:true,clues:["The page provides clear comparison information.","No forced login appears.","The address matches the site name."],why:"The example is transparent and does not pressure the visitor."}
+ ],
+ "Movies & TV":[
+  {name:"ScreenGuide",domain:"screenguide.example",desc:"Browse film reviews and viewing guides.",safe:true,clues:["The site clearly explains its purpose.","No suspicious player download is required.","The domain is consistent."],why:"Avoid unofficial streaming pages that push unknown downloads."},
+  {name:"Free Cinema HD",domain:"free-cinema-hd.example.player-update.example",desc:"Install our special codec to watch this film.",safe:false,clues:["It demands an unexpected codec download.","The domain is unrelated to a known provider.","The page gives no trustworthy publisher details."],why:"Unexpected video codecs and players can carry malware."},
+  {name:"Film Notes",domain:"filmnotes.example",desc:"Read reviews and cinema news.",safe:true,clues:["The page is informational.","No account details are requested.","The domain matches its title."],why:"No obvious malicious behaviour is shown in this fictional example."}
+ ],
+ Sports:[
+  {name:"Match Centre",domain:"matchcentre.example",desc:"Read scores, fixtures and team news.",safe:true,clues:["The page gives clear sports information.","No login or payment is unexpectedly requested.","The domain matches the service."],why:"The example provides information without suspicious requests."},
+  {name:"Exclusive Ticket Win",domain:"free-final-tickets.example.claim-now.example",desc:"You won VIP tickets. Pay a small release fee by gift card.",safe:false,clues:["An unexpected prize is used as bait.","Gift-card payment is a major warning sign.","The address is unrelated to an official ticket seller."],why:"Unexpected prizes and unusual payment methods are strong scam signals."},
+  {name:"Club History",domain:"clubhistory.example",desc:"Read team history and player statistics.",safe:true,clues:["The site has clear informational content.","It does not demand personal details.","The domain matches the subject."],why:"The example has no obvious scam indicators."}
+ ],
+ School:[
+  {name:"Study Notes",domain:"studynotes.example",desc:"Browse revision notes and learning guides.",safe:true,clues:["The site explains its educational content.","No unusual software download is required.","The domain matches the service."],why:"Check that resources are suitable and from a trustworthy source."},
+  {name:"Homework Answers Download",domain:"instant-homework.example.file-download.example",desc:"Download this answer pack and enable macros to open it.",safe:false,clues:["It asks you to enable macros in a downloaded file.","The publisher is unknown.","The download is pushed without clear details."],why:"Do not enable macros in unexpected files."},
+  {name:"Science Reference",domain:"sciencereference.example",desc:"Read science explanations and definitions.",safe:true,clues:["The page is informational.","No suspicious login is requested.","The address matches the resource."],why:"The example is a straightforward reference page."}
+ ],
+ Email:[
+  {name:"MailDesk",domain:"maildesk.example",desc:"Read about email features and account settings.",safe:true,clues:["The domain matches the service name.","No unexpected password reset is requested.","The page provides help information."],why:"Always navigate to email through its known address."},
+  {name:"Mailbox Storage Alert",domain:"maildesk.example.storage-warning-login.example",desc:"Your inbox will be deleted. Sign in now to increase storage.",safe:false,clues:["The real domain does not match the claimed provider.","It threatens account deletion.","It asks you to sign in through a suspicious link."],why:"This is a common email phishing pattern."},
+  {name:"Inbox Tips",domain:"inboxtips.example",desc:"Learn how to organise and filter email.",safe:true,clues:["The site gives general advice.","It does not ask for account credentials.","The domain matches the content."],why:"No obvious threat is present in this fictional example."}
+ ],
+ "AI tools":[
+  {name:"Prompt Workshop",domain:"promptworkshop.example",desc:"Explore guides for writing better prompts.",safe:true,clues:["The site explains its tools and limits.","No unusual permissions are requested.","The domain matches its name."],why:"Check privacy terms before entering personal information into AI tools."},
+  {name:"AI Premium Unlocker",domain:"free-ai-premium.example.account-verify.example",desc:"Get unlimited premium AI. Enter your email password to activate.",safe:false,clues:["The page asks for your email password, which it should not need.","It promises premium access for free.","The address is unrelated to a known provider."],why:"Never share your email password to unlock a third-party service."},
+  {name:"Model Directory",domain:"modeldirectory.example",desc:"Browse descriptions of fictional AI models.",safe:true,clues:["The page is informational.","It does not demand credentials.","The domain matches the directory name."],why:"No obvious scam signals appear in this example."}
+
 };
 let score=0,streak=0,round=0,topic=null,sites=[],selected=null,inspected=new Set(),answered=new Set(),roundPoints=0,health=100;
 const difficultyLevels=["Easy","Normal","Hard"];
@@ -166,7 +225,7 @@ function show(id){["intro","hunt","end"].forEach(x=>$(x).classList.toggle("hidde
 function stats(){$("score").textContent=score;$("streak").textContent=streak;$("round").textContent=round;$("progress").style.width=(answered.size/3*100)+"%";$("healthText").textContent=health;$("healthBar").style.width=health+"%";$("healthBar").style.background=health<=25?"#c66b5d":health<=50?"#d0a45d":"#8eae75"}
 function shuffle(a){return [...a].sort(()=>Math.random()-.5)}
 function start(){show("intro");$("topics").innerHTML="";topics.forEach(t=>{const b=document.createElement("button");b.className="category";b.innerHTML="<span>"+t.icon+"</span><span><b>"+t.name+"</b><br><small>Start this search</small></span>";b.onclick=()=>beginRound(t);$("topics").appendChild(b)});$("levelLabel").textContent="RANDOM"}
-function beginRound(t){topic=t;round++;roundPoints=0;inspected=new Set();answered=new Set();sites=shuffle(bank[t.name]).map((s,i)=>({...s,id:i,difficulty:difficultyLevels[Math.floor(Math.random()*difficultyLevels.length)],malware:s.safe?null:malwareTypes[Math.floor(Math.random()*malwareTypes.length)]}));$("levelLabel").textContent="RANDOM";$("topicLabel").textContent="Topic: "+t.name;$("searchText").textContent=t.query;$("results").innerHTML="";$("inspect").classList.add("hidden");sites.forEach(s=>{const b=document.createElement("button");b.className="site";b.innerHTML='<div class="site-head"><span class="domain">'+s.name+'</span><span class="tag">'+s.difficulty+' · Inspect</span></div><p>'+s.desc+'</p><p class="domain">'+s.domain+'</p>';b.onclick=()=>inspect(s);$("results").appendChild(b)});$("checked").textContent="0 of 3 inspected";stats();show("hunt")}
+function beginRound(t){topic=t;round++;roundPoints=0;inspected=new Set();answered=new Set();const roundDifficulty=difficultyLevels[Math.floor(Math.random()*difficultyLevels.length)];sites=shuffle(bank[t.name]).map((s,i)=>({...s,id:i,difficulty:roundDifficulty,malware:s.safe?null:malwareTypes[Math.floor(Math.random()*malwareTypes.length)]}));$("levelLabel").textContent="RANDOM";$("topicLabel").textContent="Topic: "+t.name;$("searchText").textContent=t.query;$("results").innerHTML="";$("inspect").classList.add("hidden");sites.forEach(s=>{const b=document.createElement("button");b.className="site";b.innerHTML='<div class="site-head"><span class="domain">'+s.name+'</span><span class="tag">'+s.difficulty+' · Inspect</span></div><p>'+s.desc+'</p><p class="domain">'+s.domain+'</p>';b.onclick=()=>inspect(s);$("results").appendChild(b)});$("checked").textContent="0 of 3 inspected";stats();show("hunt")}
 function inspect(s){if(answered.has(s.id))return;selected=s;inspected.add(s.id);$("inspectTitle").textContent=s.name;$("inspectDomain").textContent="Website address: "+s.domain;$("clues").innerHTML="";s.clues.slice(0,difficultyInfo[s.difficulty].clues).forEach(c=>{const li=document.createElement("li");li.textContent=c;$("clues").appendChild(li)});$("feedback").className="feedback hidden";$("feedback").innerHTML="";$("inspect").classList.remove("hidden");$("checked").textContent=inspected.size+" of 3 inspected";$("safeBtn").disabled=false;$("unsafeBtn").disabled=false;$("safeBtn").onclick=()=>judge(true);$("unsafeBtn").onclick=()=>judge(false)}
 function judge(choice){if(!selected||answered.has(selected.id))return;const s=selected,correct=choice===s.safe;answered.add(s.id);let damage=0;if(correct){const points=difficultyInfo[s.difficulty].points;score+=points;streak++;roundPoints+=points}else{streak=0;damage=s.safe?8:s.malware.damage;health=Math.max(0,health-damage)}stats();const f=$("feedback");f.className="feedback "+(correct?"good":"bad");f.innerHTML="<h3>"+(correct?"Correct call! +"+difficultyInfo[s.difficulty].points+" points":"Not quite — "+(s.safe?"this example looks safe":"this example is suspicious"))+"</h3>"+(!correct?"<p><b>"+(s.safe?"False alarm":"Threat detected: "+s.malware.name)+"</b> — "+damage+" health lost.</p>":"")+(health===0?"<p><b>Your health has run out. Investigation over!</b></p>":"")+"<p><b>Decision locked.</b> You cannot change this answer.</p><p>"+s.why+"</p><p><b>Remember:</b> Never use a search-result label alone as proof. Check the exact domain, avoid unexpected downloads, and never share passwords or security codes.</p>";$("safeBtn").disabled=true;$("unsafeBtn").disabled=true;const card=[...$("results").children].find(x=>x.textContent.includes(s.name));if(card){card.style.opacity=".55";card.querySelector(".tag").textContent=correct?"Correct":"Reviewed"}if(health===0){const n=document.createElement("button");n.className="primary";n.textContent="Restart game";n.onclick=restartGame;f.appendChild(n);$("safeBtn").disabled=true;$("unsafeBtn").disabled=true;$("endTitle").textContent="Investigation over";$("roundSummary").textContent="You ran out of health. Final score: "+score+".";show("end")}else if(answered.size===3){const n=document.createElement("button");n.className="primary";n.textContent="Finish round";n.onclick=finishRound;f.appendChild(n)}}
 function finishRound(){$("endTitle").textContent="Round complete";$("roundSummary").textContent="You earned "+roundPoints+" points this round. Total score: "+score+". Current streak: "+streak+". Health remaining: "+health+"." ;show("end")}
